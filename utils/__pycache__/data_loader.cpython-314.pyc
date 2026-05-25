@@ -1,0 +1,64 @@
+import yfinance as yf
+import pandas as pd
+
+# ------------------------------------------
+# LOAD SINGLE STOCK
+# ------------------------------------------
+
+def load_stock_data(ticker, period="1y"):
+
+    data = yf.download(ticker, period=period)
+
+    return data
+
+# ------------------------------------------
+# GET STOCK DATA
+# ------------------------------------------
+
+def get_stock_data(ticker, period="1y"):
+
+    return yf.download(ticker, period=period)
+
+# ------------------------------------------
+# GET STOCK INFO
+# ------------------------------------------
+
+def get_stock_info(ticker):
+
+    stock = yf.Ticker(ticker)
+
+    return stock.info
+
+# ------------------------------------------
+# GET MULTIPLE STOCKS
+# ------------------------------------------
+
+def get_multiple_stocks(tickers, period="1y"):
+
+    combined = pd.DataFrame()
+
+    for ticker in tickers:
+
+        data = yf.download(ticker, period=period)
+
+        combined[ticker] = data['Close']
+
+    return combined
+
+# ------------------------------------------
+# MARKET OVERVIEW
+# ------------------------------------------
+
+def get_market_overview():
+
+    tickers = ["AAPL", "TSLA", "MSFT", "NVDA"]
+
+    market_data = {}
+
+    for ticker in tickers:
+
+        data = yf.download(ticker, period="5d")
+
+        market_data[ticker] = data
+
+    return market_data
